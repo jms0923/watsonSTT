@@ -23,11 +23,15 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Vector;
 
+import android.annotation.TargetApi;
 import android.app.FragmentTransaction;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -257,6 +261,7 @@ public class MainActivity extends Activity {
             }
         }
 
+        @TargetApi(Build.VERSION_CODES.KITKAT)
         protected void addItemsOnSpinnerModels() {
 
             Spinner spinner = (Spinner)mView.findViewById(R.id.spinnerModels);
@@ -276,11 +281,265 @@ public class MainActivity extends Activity {
                 }
                 items = new ItemModel[v.size()];
                 int iItems = 0;
-                for (int i = 0; i < v.size() ; ++i) {
-                    items[iItems] = new ItemModel(models.getJSONObject(v.elementAt(i)));
+                JSONArray tmpModels = new JSONArray();
+
+                for (int i = 0; i < v.size(); ++i){
+                    if(models.getJSONObject(v.elementAt(i)).getString("language").equals("ko-KR")){
+                        JSONObject tmpObject = new JSONObject();
+
+                        String name = "ko-KR_BroadbandModel";
+                        String language = "ko-KR";
+                        String url = "https://stream.watsonplatform.net/speech-to-text/api/v1/models/ko-KR_BroadbandModel";
+                        int rate = 16000;
+
+                        JSONObject supported_features = new JSONObject();
+                        boolean custom_language_model = true;
+                        boolean speaker_labels = false;
+                        supported_features.put("custom_language_model", custom_language_model);
+                        supported_features.put("speaker_labels", speaker_labels);
+
+                        String description = "한국어";
+                        Log.d("checkNumber", "korea");
+                        tmpObject.put("name", name);
+                        tmpObject.put("language", language);
+                        tmpObject.put("url", url);
+                        tmpObject.put("rate", rate);
+                        tmpObject.put("supported_features", supported_features);
+                        tmpObject.put("description", description);
+                        tmpModels.put(tmpObject);
+                        Log.d("checkModelsName", tmpModels.getJSONObject(0).toString());
+                    }
+                    else if(models.getJSONObject(v.elementAt(i)).getString("language").equals("fr-FR")){
+                        JSONObject tmpObject = new JSONObject();
+                        String name = "fr-FR_BroadbandModel";
+                        String language = "fr-FR";
+                        String url = "https://stream.watsonplatform.net/speech-to-text/api/v1/models/fr-FR_BroadbandModel";
+                        int rate = 16000;
+
+                        JSONObject supported_features = new JSONObject();
+                        boolean custom_language_model = true;
+                        boolean speaker_labels = false;
+                        supported_features.put("custom_language_model", custom_language_model);
+                        supported_features.put("speaker_labels", speaker_labels);
+
+                        String description = "불어";
+                        Log.d("checkNumber", "fr");
+                        tmpObject.put("name", name);
+                        tmpObject.put("language", language);
+                        tmpObject.put("url", url);
+                        tmpObject.put("rate", rate);
+                        tmpObject.put("supported_features", supported_features);
+                        tmpObject.put("description", description);
+                        tmpModels.put(tmpObject);
+                        Log.d("checkModelsName", tmpModels.getJSONObject(1).toString());
+                    }
+                    else if(models.getJSONObject(v.elementAt(i)).getString("language").equals("pt-BR")){
+                        JSONObject tmpObject = new JSONObject();
+
+                        String name = "pt-BR_BroadbandModel";
+                        String language = "pt-BR";
+                        String url = "https://stream.watsonplatform.net/speech-to-text/api/v1/models/pt-BR_BroadbandModel";
+                        int rate = 16000;
+
+                        JSONObject supported_features = new JSONObject();
+                        boolean custom_language_model = true;
+                        boolean speaker_labels = true;
+                        supported_features.put("custom_language_model", custom_language_model);
+                        supported_features.put("speaker_labels", speaker_labels);
+
+                        String description = "포르투갈어";
+                        Log.d("checkNumber", "pt-br");
+                        tmpObject.put("name", name);
+                        tmpObject.put("language", language);
+                        tmpObject.put("url", url);
+                        tmpObject.put("rate", rate);
+                        tmpObject.put("supported_features", supported_features);
+                        tmpObject.put("description", description);
+                        tmpModels.put(tmpObject);
+                        Log.d("checkModelsName", tmpModels.getJSONObject(2).toString());
+                    }
+                    else if(models.getJSONObject(v.elementAt(i)).getString("language").equals("zh-CN")){
+                        JSONObject tmpObject = new JSONObject();
+
+                        String name = "zh-CN_BroadbandModel";
+                        String language = "zh-CN";
+                        String url = "https://stream.watsonplatform.net/speech-to-text/api/v1/models/zh-CN_BroadbandModel";
+                        int rate = 16000;
+
+                        JSONObject supported_features = new JSONObject();
+                        boolean custom_language_model = false;
+                        boolean speaker_labels = false;
+                        supported_features.put("custom_language_model", custom_language_model);
+                        supported_features.put("speaker_labels", speaker_labels);
+
+                        String description = "중국어";
+                        Log.d("checkNumber", "zh-cn");
+                        tmpObject.put("name", name);
+                        tmpObject.put("language", language);
+                        tmpObject.put("url", url);
+                        tmpObject.put("rate", rate);
+                        tmpObject.put("supported_features", supported_features);
+                        tmpObject.put("description", description);
+                        tmpModels.put(tmpObject);
+                        Log.d("checkModelsName", tmpModels.getJSONObject(3).toString());
+                    }
+                    else if(models.getJSONObject(v.elementAt(i)).getString("language").equals("ja-JP")){
+                        JSONObject tmpObject = new JSONObject();
+
+                        String name = "ja-JP_BroadbandModel";
+                        String language = "ja-JP";
+                        String url = "https://stream.watsonplatform.net/speech-to-text/api/v1/models/ja-JP_BroadbandModel";
+                        int rate = 16000;
+
+                        JSONObject supported_features = new JSONObject();
+                        boolean custom_language_model = true;
+                        boolean speaker_labels = true;
+                        supported_features.put("custom_language_model", custom_language_model);
+                        supported_features.put("speaker_labels", speaker_labels);
+
+                        String description = "일본어";
+                        Log.d("checkNumber", "jp");
+                        tmpObject.put("name", name);
+                        tmpObject.put("language", language);
+                        tmpObject.put("url", url);
+                        tmpObject.put("rate", rate);
+                        tmpObject.put("supported_features", supported_features);
+                        tmpObject.put("description", description);
+                        tmpModels.put(tmpObject);
+                        Log.d("checkModelsName", tmpModels.getJSONObject(4).toString());
+                    }
+                    else if(models.getJSONObject(v.elementAt(i)).getString("language").equals("es-ES")){
+                        JSONObject tmpObject = new JSONObject();
+
+                        String name = "es-ES_BroadbandModel";
+                        String language = "es-ES";
+                        String url = "https://stream.watsonplatform.net/speech-to-text/api/v1/models/ja-JP_BroadbandModel";
+                        int rate = 16000;
+
+                        JSONObject supported_features = new JSONObject();
+                        boolean custom_language_model = true;
+                        boolean speaker_labels = true;
+                        supported_features.put("custom_language_model", custom_language_model);
+                        supported_features.put("speaker_labels", speaker_labels);
+
+                        String description = "스페인어";
+                        Log.d("checkNumber", "es-es");
+                        tmpObject.put("name", name);
+                        tmpObject.put("language", language);
+                        tmpObject.put("url", url);
+                        tmpObject.put("rate", rate);
+                        tmpObject.put("supported_features", supported_features);
+                        tmpObject.put("description", description);
+                        tmpModels.put(tmpObject);
+                        Log.d("checkModelsName", tmpModels.getJSONObject(5).toString());
+                    }
+                    else if(models.getJSONObject(v.elementAt(i)).getString("language").equals("ar-AR")){
+                        JSONObject tmpObject = new JSONObject();
+
+                        String name = "ar-AR_BroadbandModel";
+                        String language = "ar-AR";
+                        String url = "https://stream.watsonplatform.net/speech-to-text/api/v1/models/ar-AR_BroadbandModel";
+                        int rate = 16000;
+
+                        JSONObject supported_features = new JSONObject();
+                        boolean custom_language_model = false;
+                        boolean speaker_labels = false;
+                        supported_features.put("custom_language_model", custom_language_model);
+                        supported_features.put("speaker_labels", speaker_labels);
+
+                        String description = "아랍어";
+                        Log.d("checkNumber", "ar-ar");
+                        tmpObject.put("name", name);
+                        tmpObject.put("language", language);
+                        tmpObject.put("url", url);
+                        tmpObject.put("rate", rate);
+                        tmpObject.put("supported_features", supported_features);
+                        tmpObject.put("description", description);
+                        tmpModels.put(tmpObject);
+                        Log.d("checkModelsName", tmpModels.getJSONObject(6).toString());
+                    }
+                    else if(models.getJSONObject(v.elementAt(i)).getString("language").equals("de-DE")){
+                        JSONObject tmpObject = new JSONObject();
+
+                        String name = "de-DE_BroadbandModel";
+                        String language = "de-DE";
+                        String url = "https://stream.watsonplatform.net/speech-to-text/api/v1/models/de-DE_BroadbandModel";
+                        int rate = 16000;
+
+                        JSONObject supported_features = new JSONObject();
+                        boolean custom_language_model = true;
+                        boolean speaker_labels = false;
+                        supported_features.put("custom_language_model", custom_language_model);
+                        supported_features.put("speaker_labels", speaker_labels);
+
+                        String description = "독일어";
+                        Log.d("checkNumber", "de-DE");
+                        tmpObject.put("name", name);
+                        tmpObject.put("language", language);
+                        tmpObject.put("url", url);
+                        tmpObject.put("rate", rate);
+                        tmpObject.put("supported_features", supported_features);
+                        tmpObject.put("description", description);
+                        tmpModels.put(tmpObject);
+                        Log.d("checkModelsName", tmpModels.getJSONObject(7).toString());
+                    }
+                    else if(models.getJSONObject(v.elementAt(i)).getString("language").equals("en-GB")){
+                        JSONObject tmpObject = new JSONObject();
+
+                        String name = "en-GB_BroadbandModel";
+                        String language = "en-GB";
+                        String url = "https://stream.watsonplatform.net/speech-to-text/api/v1/models/en-GB_BroadbandModel";
+                        int rate = 16000;
+
+                        JSONObject supported_features = new JSONObject();
+                        boolean custom_language_model = true;
+                        boolean speaker_labels = false;
+                        supported_features.put("custom_language_model", custom_language_model);
+                        supported_features.put("speaker_labels", speaker_labels);
+
+                        String description = "영어(영국)";
+                        Log.d("checkNumber", "en-gb");
+                        tmpObject.put("name", name);
+                        tmpObject.put("language", language);
+                        tmpObject.put("url", url);
+                        tmpObject.put("rate", rate);
+                        tmpObject.put("supported_features", supported_features);
+                        tmpObject.put("description", description);
+                        tmpModels.put(tmpObject);
+                        Log.d("checkModelsName", tmpModels.getJSONObject(8).toString());
+                    }
+                    else if(models.getJSONObject(v.elementAt(i)).getString("language").equals("en-US")){
+                        JSONObject tmpObject = new JSONObject();
+
+                        String name = "en-US_BroadbandModel";
+                        String language = "en-US";
+                        String url = "https://stream.watsonplatform.net/speech-to-text/api/v1/models/en-US_BroadbandModel";
+                        int rate = 16000;
+
+                        JSONObject supported_features = new JSONObject();
+                        boolean custom_language_model = true;
+                        boolean speaker_labels = false;
+                        supported_features.put("custom_language_model", custom_language_model);
+                        supported_features.put("speaker_labels", speaker_labels);
+
+                        String description = "영어(미국)";
+                        Log.d("checkNumber", "en-us");
+                        tmpObject.put("name", name);
+                        tmpObject.put("language", language);
+                        tmpObject.put("url", url);
+                        tmpObject.put("rate", rate);
+                        tmpObject.put("supported_features", supported_features);
+                        tmpObject.put("description", description);
+                        tmpModels.put(tmpObject);
+                        Log.d("checkModelsName", tmpModels.getJSONObject(9).toString());
+                    }
+                }
+
+                for (int i = 0; i < v.size() ; ++i) { // v.elementAt(i)
+                    items[iItems] = new ItemModel(tmpModels.getJSONObject(i));
                     if (models.getJSONObject(v.elementAt(i)).getString("name").equals(getString(R.string.modelDefault))) {
                         iIndexDefault = iItems;
-                    }
+                }
                     ++iItems;
                 }
             } catch (JSONException e) {
@@ -300,6 +559,7 @@ public class MainActivity extends Activity {
                 public void run() {
                     TextView textResult = (TextView)mView.findViewById(R.id.textResult);
                     textResult.setText(result);
+                    textResult.setMovementMethod(new ScrollingMovementMethod());
                 }
             };
 
@@ -687,13 +947,13 @@ public class MainActivity extends Activity {
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         tabSTT = actionBar.newTab().setText("Speech to Text");
-        tabTTS = actionBar.newTab().setText("Text to Speech");
+//        tabTTS = actionBar.newTab().setText("Text to Speech");
 
         tabSTT.setTabListener(new MyTabListener(fragmentTabSTT));
-        tabTTS.setTabListener(new MyTabListener(fragmentTabTTS));
+//        tabTTS.setTabListener(new MyTabListener(fragmentTabTTS));
 
         actionBar.addTab(tabSTT);
-        actionBar.addTab(tabTTS);
+//        actionBar.addTab(tabTTS);
 
         //actionBar.setStackedBackgroundDrawable(new ColorDrawable(Color.parseColor("#B5C0D0")));
 	}

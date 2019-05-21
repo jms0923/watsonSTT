@@ -3,17 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:background="#ffffff">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
+        android:background="#e0e0e0"
         android:paddingLeft="16dp"
+        android:paddingTop="16dp"
         android:paddingRight="16dp"
-        android:background="#e0e0e0"/>
+        android:paddingBottom="16dp" />
 
     <TextView
         android:id="@+id/instructions"
@@ -51,29 +53,45 @@
         android:textColor="#FFFFFF"
         android:textSize="14dp"/>
 
-    <TextView
-        android:id="@+id/textResult"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_below="@+id/buttonRecord"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/back"
-        android:editable="true"
-        android:height="150dp"
-        android:text=""/>
+    <!--<TextView-->
+        <!--android:id="@+id/textResult"-->
+        <!--android:layout_width="376dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/buttonRecord"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--android:height="150dp"-->
+        <!--android:background="@drawable/back"-->
+        <!--android:editable="true"-->
+        <!--android:scrollbarAlwaysDrawVerticalTrack="true"-->
+        <!--android:scrollbars="vertical"-->
+        <!--android:text="" />-->
 
     <TextView
         android:id="@+id/sttStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/textResult"
-        android:layout_marginTop="5dp"
-        android:editable="true"
+        android:layout_marginTop="-3dp"
         android:height="20dp"
-        android:textSize="12dp"
-        android:text=""/>
+        android:editable="true"
+        android:scrollbars="vertical"
+        android:text=""
+        android:textSize="12dp" />
+
+    <EditText
+        android:id="@+id/textResult"
+        android:layout_width="376dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@+id/buttonRecord"
+        android:ems="10"
+        android:clickable="false"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:gravity="start|top"
+        android:inputType="textMultiLine" />
 
 </RelativeLayout>
