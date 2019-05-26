@@ -22,17 +22,17 @@ import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Vector;
+import java.util.regex.Matcher;
 
 import android.annotation.TargetApi;
 import android.app.FragmentTransaction;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.AbsoluteSizeSpan;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.app.ActionBar;
@@ -46,8 +46,6 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -57,7 +55,6 @@ import android.widget.TextView;
 import com.ibm.watson.developer_cloud.android.speech_to_text.v1.dto.SpeechConfiguration;
 import com.ibm.watson.developer_cloud.android.speech_to_text.v1.ISpeechDelegate;
 import com.ibm.watson.developer_cloud.android.speech_to_text.v1.SpeechToText;
-import com.ibm.watson.developer_cloud.android.text_to_speech.v1.TextToSpeech;
 import com.ibm.watson.developer_cloud.android.speech_common.v1.TokenProvider;
 
 import org.apache.commons.io.IOUtils;
@@ -70,19 +67,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivity extends Activity {
+ public class MainActivity extends Activity {
 
 	private static final String TAG = "MainActivity";
 
-	TextView textTTS;
-
-    ActionBar.Tab tabSTT, tabTTS;
+    ActionBar.Tab tabSTT;
     FragmentTabSTT fragmentTabSTT = new FragmentTabSTT();
-    FragmentTabTTS fragmentTabTTS = new FragmentTabTTS();
 
     public static class FragmentTabSTT extends Fragment implements ISpeechDelegate {
 
-        // session recognition results
         private static String mRecognitionResults = "";
 
         private enum ConnectionState {
@@ -143,7 +136,7 @@ public class MainActivity extends Activity {
                                 return null;
                             }
                         }.execute();
-                        setButtonLabel(R.id.buttonRecord, "Connecting...");
+                        setButtonLabel(R.id.buttonRecord, "연결중...");
                         setButtonState(true);
                     }
                     else if (mState == ConnectionState.CONNECTED) {
@@ -224,14 +217,6 @@ public class MainActivity extends Activity {
             viewTitle.setText(spannable);
             viewTitle.setTextColor(0xFF325C80);
 
-            // instructions
-            TextView viewInstructions = (TextView)mView.findViewById(R.id.instructions);
-            String strInstructions = getString(R.string.sttInstructions);
-            SpannableString spannable2 = new SpannableString(strInstructions);
-            spannable2.setSpan(new AbsoluteSizeSpan(20), 0, strInstructions.length(), 0);
-            spannable2.setSpan(new CustomTypefaceSpan("", notosans), 0, strInstructions.length(), 0);
-            viewInstructions.setText(spannable2);
-            viewInstructions.setTextColor(0xFF121212);
         }
 
         public class ItemModel {
@@ -553,13 +538,14 @@ public class MainActivity extends Activity {
             }
         }  
 
-        public void displayResult(final String result) {
+        public void displayResult(final String result){
             final Runnable runnableUi = new Runnable(){
                 @Override
                 public void run() {
                     TextView textResult = (TextView)mView.findViewById(R.id.textResult);
                     textResult.setText(result);
                     textResult.setMovementMethod(new ScrollingMovementMethod());
+                    setURL();
                 }
             };
 
@@ -568,6 +554,24 @@ public class MainActivity extends Activity {
                     mHandler.post(runnableUi);
                 }
             }.start();
+        }
+
+        public void setURL(){
+            TextView textResult = (TextView)mView.findViewById(R.id.textResult);
+            Linkify.TransformFilter mTransform = new Linkify.TransformFilter(){
+                @Override
+                public String transformUrl(Matcher matcher, String url) {
+                    return "";
+                }
+            };
+
+            Linkify.addLinks(textResult, PatternDataBase.pattern1, "https://terms.naver.com/search.nhn?query=산성&searchType=text&dicType=&subject=", null, mTransform);
+            Linkify.addLinks(textResult, PatternDataBase.pattern2, "https://terms.naver.com/search.nhn?query=염기성&searchType=text&dicType=&subject=", null, mTransform);
+            Linkify.addLinks(textResult, PatternDataBase.pattern3, "https://terms.naver.com/search.nhn?query=수산화나트륨&searchType=text&dicType=&subject=", null, mTransform);
+            Linkify.addLinks(textResult, PatternDataBase.pattern4, "https://terms.naver.com/search.nhn?query=기포&searchType=text&dicType=&subject=", null, mTransform);
+            Linkify.addLinks(textResult, PatternDataBase.pattern5, "https://terms.naver.com/search.nhn?query=탄산칼슘&searchType=text&dicType=&subject==", null, mTransform);
+            Linkify.addLinks(textResult, PatternDataBase.pattern6, "https://terms.naver.com/search.nhn?query=용액&searchType=text&dicType=&subject=", null, mTransform);
+            Linkify.addLinks(textResult, PatternDataBase.pattern7, "https://terms.naver.com/search.nhn?query=단백질&searchType=text&dicType=&subject=", null, mTransform);
         }
 
         public void displayStatus(final String status) {
@@ -628,7 +632,7 @@ public class MainActivity extends Activity {
         public void onOpen() {
             Log.d(TAG, "onOpen");
             displayStatus("successfully connected to the STT service");
-            setButtonLabel(R.id.buttonRecord, "Stop recording");
+            setButtonLabel(R.id.buttonRecord, "멈춤");
             mState = ConnectionState.CONNECTED;
         }
 
@@ -642,7 +646,7 @@ public class MainActivity extends Activity {
         public void onClose(int code, String reason, boolean remote) {
             Log.d(TAG, "onClose, code: " + code + " reason: " + reason);
             displayStatus("connection closed");
-            setButtonLabel(R.id.buttonRecord, "Record");
+            setButtonLabel(R.id.buttonRecord, "시작");
             mState = ConnectionState.IDLE;
         }
 
@@ -691,204 +695,6 @@ public class MainActivity extends Activity {
         }
 
         public void onAmplitude(double amplitude, double volume) {
-            //Logger.e(TAG, "amplitude=" + amplitude + ", volume=" + volume);
-        }
-    }
-
-    public static class FragmentTabTTS extends Fragment {
-
-        public View mView = null;
-        public Context mContext = null;
-        public JSONObject jsonVoices = null;
-        private Handler mHandler = null;
-
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            Log.d(TAG, "onCreateTTS");
-            mView = inflater.inflate(R.layout.tab_tts, container, false);
-            mContext = getActivity().getApplicationContext();
-
-            setText();
-            if (initTTS() == false) {
-                TextView viewPrompt = (TextView) mView.findViewById(R.id.prompt);
-                viewPrompt.setText("Error: no authentication credentials or token available, please enter your authentication information");
-                return mView;
-            }
-
-            if (jsonVoices == null) {
-                jsonVoices = new TTSCommands().doInBackground();
-                if (jsonVoices == null) {
-                    return mView;
-                }
-            }
-            addItemsOnSpinnerVoices();
-            updatePrompt(getString(R.string.voiceDefault));
-
-            Spinner spinner = (Spinner) mView.findViewById(R.id.spinnerVoices);
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-
-                    Log.d(TAG, "setOnItemSelectedListener");
-                    final Runnable runnableUi = new Runnable() {
-                        @Override
-                        public void run() {
-                            FragmentTabTTS.this.updatePrompt(FragmentTabTTS.this.getSelectedVoice());
-                        }
-                    };
-                    new Thread() {
-                        public void run() {
-                            mHandler.post(runnableUi);
-                        }
-                    }.start();
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parentView) {
-                    // your code here
-                }
-            });
-
-            mHandler = new Handler();
-            return mView;
-        }
-
-        public URI getHost(String url){
-            try {
-                return new URI(url);
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        private boolean initTTS() {
-
-            // DISCLAIMER: please enter your credentials or token factory in the lines below
-
-            String username = getString(R.string.TTSUsername);
-            String password = getString(R.string.TTSPassword);
-            String tokenFactoryURL = getString(R.string.defaultTokenFactory);
-            String serviceURL = "https://stream.watsonplatform.net/text-to-speech/api";
-
-            TextToSpeech.sharedInstance().initWithContext(this.getHost(serviceURL));
-
-            // token factory is the preferred authentication method (service credentials are not distributed in the client app)
-            if (tokenFactoryURL.equals(getString(R.string.defaultTokenFactory)) == false) {
-                TextToSpeech.sharedInstance().setTokenProvider(new MyTokenProvider(tokenFactoryURL));
-            }
-            // Basic Authentication
-            else if (username.equals(getString(R.string.defaultUsername)) == false) {
-                TextToSpeech.sharedInstance().setCredentials(username, password);
-            } else {
-                // no authentication method available
-                return false;
-            }
-            TextToSpeech.sharedInstance().setLearningOptOut(false); // Change to true to opt-out
-
-            TextToSpeech.sharedInstance().setVoice(getString(R.string.voiceDefault));
-
-            return true;
-        }
-
-        protected void setText() {
-
-            Typeface roboto = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "font/Roboto-Bold.ttf");
-            Typeface notosans = Typeface.createFromAsset(getActivity().getApplicationContext().getAssets(), "font/NotoSans-Regular.ttf");
-
-            TextView viewTitle = (TextView)mView.findViewById(R.id.title);
-            String strTitle = getString(R.string.ttsTitle);
-            SpannableString spannable = new SpannableString(strTitle);
-            spannable.setSpan(new AbsoluteSizeSpan(47), 0, strTitle.length(), 0);
-            spannable.setSpan(new CustomTypefaceSpan("", roboto), 0, strTitle.length(), 0);
-            viewTitle.setText(spannable);
-            viewTitle.setTextColor(0xFF325C80);
-
-            TextView viewInstructions = (TextView)mView.findViewById(R.id.instructions);
-            String strInstructions = getString(R.string.ttsInstructions);
-            SpannableString spannable2 = new SpannableString(strInstructions);
-            spannable2.setSpan(new AbsoluteSizeSpan(20), 0, strInstructions.length(), 0);
-            spannable2.setSpan(new CustomTypefaceSpan("", notosans), 0, strInstructions.length(), 0);
-            viewInstructions.setText(spannable2);
-            viewInstructions.setTextColor(0xFF121212);
-        }
-
-        public class ItemVoice {
-
-            public JSONObject mObject = null;
-
-            public ItemVoice(JSONObject object) {
-                mObject = object;
-            }
-
-            public String toString() {
-                try {
-                    return mObject.getString("name");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-        }
-
-        public void addItemsOnSpinnerVoices() {
-
-            Spinner spinner = (Spinner)mView.findViewById(R.id.spinnerVoices);
-            int iIndexDefault = 0;
-
-            JSONObject obj = jsonVoices;
-            ItemVoice [] items = null;
-            try {
-                JSONArray voices = obj.getJSONArray("voices");
-                items = new ItemVoice[voices.length()];
-                for (int i = 0; i < voices.length(); ++i) {
-                    items[i] = new ItemVoice(voices.getJSONObject(i));
-                    if (voices.getJSONObject(i).getString("name").equals(getString(R.string.voiceDefault))) {
-                        iIndexDefault = i;
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            if (items != null) {
-		        ArrayAdapter<ItemVoice> spinnerArrayAdapter = new ArrayAdapter<ItemVoice>(getActivity(), android.R.layout.simple_spinner_item, items);
-		        spinner.setAdapter(spinnerArrayAdapter);
-		        spinner.setSelection(iIndexDefault);
-            }
-        }
-
-        // return the selected voice
-        public String getSelectedVoice() {
-
-            // return the selected voice
-            Spinner spinner = (Spinner)mView.findViewById(R.id.spinnerVoices);
-            ItemVoice item = (ItemVoice)spinner.getSelectedItem();
-            String strVoice = null;
-            try {
-                strVoice = item.mObject.getString("name");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return strVoice;
-        }
-
-        // update the prompt for the selected voice
-        public void updatePrompt(final String strVoice) {
-
-            TextView viewPrompt = (TextView)mView.findViewById(R.id.prompt);
-            if (strVoice.startsWith("en-US") || strVoice.startsWith("en-GB")) {
-                viewPrompt.setText(getString(R.string.ttsEnglishPrompt));
-            } else if (strVoice.startsWith("es-ES")) {
-                viewPrompt.setText(getString(R.string.ttsSpanishPrompt));
-            } else if (strVoice.startsWith("fr-FR")) {
-                viewPrompt.setText(getString(R.string.ttsFrenchPrompt));
-            } else if (strVoice.startsWith("it-IT")) {
-                viewPrompt.setText(getString(R.string.ttsItalianPrompt));
-            } else if (strVoice.startsWith("de-DE")) {
-                viewPrompt.setText(getString(R.string.ttsGermanPrompt));
-            } else if (strVoice.startsWith("ja-JP")) {
-                viewPrompt.setText(getString(R.string.ttsJapanesePrompt));
-            }
         }
     }
 
@@ -921,13 +727,6 @@ public class MainActivity extends Activity {
         }
     }
 
-    public static class TTSCommands extends AsyncTask<Void, Void, JSONObject> {
-
-        protected JSONObject doInBackground(Void... none) {
-
-            return TextToSpeech.sharedInstance().getVoices();
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -939,23 +738,17 @@ public class MainActivity extends Activity {
 					.permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
-				
-		//setContentView(R.layout.activity_main);
+
         setContentView(R.layout.activity_tab_text);
 
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        tabSTT = actionBar.newTab().setText("Speech to Text");
-//        tabTTS = actionBar.newTab().setText("Text to Speech");
+        tabSTT = actionBar.newTab().setText("청각 장애인을 위한 수업 도우미");
 
         tabSTT.setTabListener(new MyTabListener(fragmentTabSTT));
-//        tabTTS.setTabListener(new MyTabListener(fragmentTabTTS));
 
         actionBar.addTab(tabSTT);
-//        actionBar.addTab(tabTTS);
-
-        //actionBar.setStackedBackgroundDrawable(new ColorDrawable(Color.parseColor("#B5C0D0")));
 	}
 
     static class MyTokenProvider implements TokenProvider {
@@ -994,25 +787,4 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
-	/**
-	 * Play TTS Audio data
-	 * 
-	 * @param view
-	 */
-	public void playTTS(View view) throws JSONException {
-
-        TextToSpeech.sharedInstance().setVoice(fragmentTabTTS.getSelectedVoice());
-        Log.d(TAG, fragmentTabTTS.getSelectedVoice());
-
-		//Get text from text box
-		textTTS = (TextView)fragmentTabTTS.mView.findViewById(R.id.prompt);
-		String ttsText=textTTS.getText().toString();
-		Log.d(TAG, ttsText);
-		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(textTTS.getWindowToken(),
-				InputMethodManager.HIDE_NOT_ALWAYS);
-
-		//Call the sdk function
-		TextToSpeech.sharedInstance().synthesize(ttsText);
-	}
 }

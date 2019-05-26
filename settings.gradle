@@ -1,2 +1,2 @@
 include ':speech-android-wrapper'
-include ':examples'
+include ':STT'

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Speech to Text</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">STT Class Helper</string>
+    <string name="action_settings">설정</string>
     <string name="buttonRecord">start recording</string>
 
-    <string name="sttTitle">Speech to Text ver0.1</string>
-    <string name="sttInstructions">Select Language and push the Start button.</string>
+    <string name="sttTitle">청각 장애인을 위한 수업 도우미 어플리케이션입니다.
+    아래의 시작 버튼을 눌러 녹음을 시작해 주세요.</string>
     <string name="ttsTitle">IBM Text to Speech</string>
     <string name="ttsInstructions">To get started choose a voice that matches the language of the text you will enter below. Enter text and press Speak to hear the results.</string>
 
@@ -15,7 +15,7 @@
 
     <!-- STT credentials -->
     <string name="STTUsername">apikey</string>
-    <string name="STTPassword">write the apikey</string>
+    <string name="STTPassword">yekP3PtdoLwpnxyApJMx5gOtJTnXnhk6EiG7_0BuKhyj</string>
 
     <!-- TTS credentials -->
     <string name="TTSUsername">dnjsl0923@gmail.com</string>

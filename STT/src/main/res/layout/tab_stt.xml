@@ -49,24 +49,9 @@
         android:layout_below="@+id/spinnerModels"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_record_start"
-        android:text="Record"
+        android:text="시작"
         android:textColor="#FFFFFF"
         android:textSize="14dp"/>
-
-    <!--<TextView-->
-        <!--android:id="@+id/textResult"-->
-        <!--android:layout_width="376dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/buttonRecord"-->
-        <!--android:layout_marginLeft="16dp"-->
-        <!--android:layout_marginTop="16dp"-->
-        <!--android:layout_marginRight="16dp"-->
-        <!--android:height="150dp"-->
-        <!--android:background="@drawable/back"-->
-        <!--android:editable="true"-->
-        <!--android:scrollbarAlwaysDrawVerticalTrack="true"-->
-        <!--android:scrollbars="vertical"-->
-        <!--android:text="" />-->
 
     <TextView
         android:id="@+id/sttStatus"
@@ -83,7 +68,7 @@
     <EditText
         android:id="@+id/textResult"
         android:layout_width="376dp"
-        android:layout_height="100dp"
+        android:layout_height="400dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
@@ -92,6 +77,9 @@
         android:clickable="false"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:gravity="start|top"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        android:linksClickable="true"
+        android:focusable="false"
+        />
 
 </RelativeLayout>
