@@ -15,11 +15,11 @@
 
     <!-- STT credentials -->
     <string name="STTUsername">apikey</string>
-    <string name="STTPassword">yekP3PtdoLwpnxyApJMx5gOtJTnXnhk6EiG7_0BuKhyj</string>
+    <string name="STTPassword">enter apikey here</string>
 
     <!-- TTS credentials -->
     <string name="TTSUsername">dnjsl0923@gmail.com</string>
-    <string name="TTSPassword">Dngkgk16</string>
+    <string name="TTSPassword">enter password here</string>
 
     <!-- for credentials validation only -->
     <string name="defaultUsername">dnjsl0923@gmail.com</string>
