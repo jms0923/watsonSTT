@@ -4,10 +4,11 @@
     <string name="action_settings">설정</string>
     <string name="buttonRecord">start recording</string>
 
-    <string name="sttTitle">청각 장애인을 위한 수업 도우미 어플리케이션입니다.
+    <string name="sttTitle">청각 장애인을 위한 수업 도우미 어플입니다.&#10;
     아래의 시작 버튼을 눌러 녹음을 시작해 주세요.</string>
-    <string name="ttsTitle">IBM Text to Speech</string>
-    <string name="ttsInstructions">To get started choose a voice that matches the language of the text you will enter below. Enter text and press Speak to hear the results.</string>
+    <string name="ttsTitle">청각 장애인을 위한 수업 도우미 어플입니다.&#10;
+    아래 박스에 글자를 입력해주세요.</string>
+    <!--<string name="ttsInstructions">To get started choose a voice that matches the language of the text you will enter below. Enter text and press Speak to hear the results.</string>-->
 
     <!-- default model/voice -->
     <string name="modelDefault">ko-KR_BroadbandModel</string>
@@ -15,20 +16,21 @@
 
     <!-- STT credentials -->
     <string name="STTUsername">apikey</string>
-    <string name="STTPassword">enter apikey here</string>
+    <string name="STTPassword">yekP3PtdoLwpnxyApJMx5gOtJTnXnhk6EiG7_0BuKhyj</string>
 
     <!-- TTS credentials -->
-    <string name="TTSUsername">dnjsl0923@gmail.com</string>
-    <string name="TTSPassword">enter password here</string>
+    <string name="TTSUsername">apikey</string>
+    <string name="TTSPassword">X_Ql80LIg5oacdc_omG4vkPZPA-6w4yAI5kj6uwT7HDE</string>
 
     <!-- for credentials validation only -->
     <string name="defaultUsername">dnjsl0923@gmail.com</string>
-    <string name="defaultPassword">Dngkgk16</string>
+    <string name="defaultPassword">Dngkgk16!@</string>
 
     <string name="defaultTokenFactory">https://stream.watsonplatform.net/speech-to-text/api</string>
+    <string name="TtsTokenFactory">https://stream.watsonplatform.net/text-to-speech/api</string>
 
     <!-- TTS default prompts -->
-    <string name="ttsEnglishPrompt">Conscious of its spiritual and moral heritage, the Union is founded on the indivisible, universal values of human dignity, freedom, equality and solidarity; it is based on the principles of democracy and the rule of law. It places the individual at the heart of its activities, by establishing the citizenship of the Union and by creating an area of freedom, security and justice.</string>
+    <string name="ttsEnglishPrompt">Text here</string>
     <string name="ttsSpanishPrompt">Consciente de su patrimonio espiritual y moral, la Unión está fundada sobre los valores indivisibles y universales de la dignidad humana, la libertad, la igualdad y la solidaridad, y se basa en los principios de la democracia y el Estado de Derecho. Al instituir la ciudadanía de la Unión y crear un espacio de libertad, seguridad y justicia, sitúa a la persona en el centro de su actuación.</string>
     <string name="ttsFrenchPrompt">Consciente de son patrimoine spirituel et moral, l\'Union se fonde sur les valeurs indivisibles et universelles de dignité humaine, de liberté, d\'égalité et de solidarité; elle repose sur le principe de la démocratie et le principe de l\'État de droit. Elle place la personne au coeur de son action en instituant la citoyenneté de l\'Union et en créant un espace de liberté, de sécurité et de justice.</string>
     <string name="ttsItalianPrompt">Consapevole del suo patrimonio spirituale e morale, l\'Unione si fonda sui valori indivisibili e universali della dignità umana, della libertà, dell\'uguaglianza e della solidarietà; essa si basa sul principio della democrazia e sul principio dello Stato di diritto. Pone la persona al centro della sua azione istituendo la cittadinanza dell\'Unione e creando uno spazio di libertà, sicurezza e giustizia.</string>

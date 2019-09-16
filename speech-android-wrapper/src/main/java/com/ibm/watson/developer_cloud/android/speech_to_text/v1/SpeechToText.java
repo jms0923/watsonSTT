@@ -213,27 +213,27 @@ public class SpeechToText {
         JSONObject object = null;
 
         try {
-            Log.d(TAG, "starting getModels");
-            HttpClient httpClient = new DefaultHttpClient();
-            String strHTTPURL = this.hostURL.toString().replace("wss","https").replace("ws", "http");
-            HttpGet httpGet = new HttpGet(strHTTPURL+"/v1/models");
-            this.buildAuthenticationHeader(httpGet);
-            httpGet.setHeader("accept","application/json");
-            HttpResponse executed = httpClient.execute(httpGet);
-            InputStream is=executed.getEntity().getContent();
+        Log.d(TAG, "starting getModels");
+        HttpClient httpClient = new DefaultHttpClient();
+        String strHTTPURL = this.hostURL.toString().replace("wss","https").replace("ws", "http");
+        HttpGet httpGet = new HttpGet(strHTTPURL+"/v1/models");
+        this.buildAuthenticationHeader(httpGet);
+        httpGet.setHeader("accept","application/json");
+        HttpResponse executed = httpClient.execute(httpGet);
+        InputStream is=executed.getEntity().getContent();
 
-            // get the JSON object containing the models from the InputStream
-            BufferedReader streamReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            StringBuilder responseStrBuilder = new StringBuilder();
-            String inputStr;
-            while ((inputStr = streamReader.readLine()) != null)
-                responseStrBuilder.append(inputStr);
-            Log.d(TAG, "response: " + responseStrBuilder.toString());
-            object = new JSONObject(responseStrBuilder.toString());
-            Log.d(TAG, object.toString());
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
+        // get the JSON object containing the models from the InputStream
+        BufferedReader streamReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+        StringBuilder responseStrBuilder = new StringBuilder();
+        String inputStr;
+        while ((inputStr = streamReader.readLine()) != null)
+            responseStrBuilder.append(inputStr);
+        Log.d(TAG, "response: " + responseStrBuilder.toString());
+        object = new JSONObject(responseStrBuilder.toString());
+        Log.d(TAG, object.toString());
+    } catch (IOException | JSONException e) {
+        e.printStackTrace();
+    }
         return object;
     }
 

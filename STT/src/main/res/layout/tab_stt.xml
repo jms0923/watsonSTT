@@ -69,17 +69,16 @@
         android:id="@+id/textResult"
         android:layout_width="376dp"
         android:layout_height="400dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
         android:layout_below="@+id/buttonRecord"
-        android:ems="10"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="16dp"
         android:clickable="false"
-        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:ems="10"
+        android:focusable="false"
         android:gravity="start|top"
         android:inputType="textMultiLine"
         android:linksClickable="true"
-        android:focusable="false"
-        />
+        android:scrollbarAlwaysDrawVerticalTrack="true" />
 
 </RelativeLayout>
