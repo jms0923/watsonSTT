@@ -69,8 +69,7 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 
 // IBM Watson SDK
-
- public class MainActivity extends Activity {
+public class MainActivity extends Activity {
 
 	private static final String TAG = "MainActivity";                                                                   // TAG는 디버깅용 변수.
 
@@ -707,7 +706,7 @@ import java.util.regex.Matcher;
         }
     }
 
-     public static class FragmentTabTTS extends Fragment {
+    public static class FragmentTabTTS extends Fragment {
 
          public View mView = null;
          public Context mContext = null;
@@ -1187,23 +1186,22 @@ import java.util.regex.Matcher;
          }
      }
 
-
-     public class MyTabListener implements ActionBar.TabListener {                                                   // 리스너 객체 생성시 호출 됨.
+    public class MyTabListener implements ActionBar.TabListener {                                                   // 리스너 객체 생성시 호출 됨.
 
         Fragment fragment;
-        public MyTabListener(Fragment fragment) {
+        public MyTabListener(Fragment fragment) {                                           // 리스너 객체 생성자
             this.fragment = fragment;
         }
 
-        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {              // 해당 탭이 선택 되었을때
             ft.replace(R.id.fragment_container, fragment);
         }
 
-        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {            // 다른 탭 선택 될때
             ft.remove(fragment);
         }
 
-        public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+        public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {            // 해당 탭 재선택 될때
             // nothing done here
         }
     }
@@ -1288,7 +1286,7 @@ import java.util.regex.Matcher;
 		return true;
 	}
 
-     public void playTTS(View view) throws JSONException {
+    public void playTTS(View view) throws JSONException {
 
          TextToSpeech.sharedInstance().setVoice(fragmentTabTTS.getSelectedVoice());
          Log.d(TAG, fragmentTabTTS.getSelectedVoice());

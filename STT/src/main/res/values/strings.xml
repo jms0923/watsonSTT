@@ -16,15 +16,15 @@
 
     <!-- STT credentials -->
     <string name="STTUsername">apikey</string>
-    <string name="STTPassword">yekP3PtdoLwpnxyApJMx5gOtJTnXnhk6EiG7_0BuKhyj</string>
+    <string name="STTPassword">token</string>
 
     <!-- TTS credentials -->
     <string name="TTSUsername">apikey</string>
-    <string name="TTSPassword">X_Ql80LIg5oacdc_omG4vkPZPA-6w4yAI5kj6uwT7HDE</string>
+    <string name="TTSPassword">token</string>
 
     <!-- for credentials validation only -->
-    <string name="defaultUsername">dnjsl0923@gmail.com</string>
-    <string name="defaultPassword">Dngkgk16!@</string>
+    <string name="defaultUsername">ID</string>
+    <string name="defaultPassword">PASS</string>
 
     <string name="defaultTokenFactory">https://stream.watsonplatform.net/speech-to-text/api</string>
     <string name="TtsTokenFactory">https://stream.watsonplatform.net/text-to-speech/api</string>
